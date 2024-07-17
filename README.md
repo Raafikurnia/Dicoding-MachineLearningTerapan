@@ -6,10 +6,19 @@
 ## Domain Proyek
 Biaya medis atau asuransi medis merupakan salah satu aspek yang penting dalam perencanaan finansial. Prediksi medical charges atau biaya medis yang akurat adalah kunci bagi perusahaan  untuk menetapkan premi yang wajar dan mengelola risiko dengan lebih efektif. Dengan memanfaatkan machine learning, model prediksi medical charges yang mampu meramalkan biaya medis berdasarkan data yang dimiliki perusahaan dapat dibuat untuk dapat membantu perusahaan memanajemen prediksi untuk pengeluaran financial tentang biaya medis.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Jelaskan mengapa dan bagaimana masalah tersebut harus diselesaikan
-- Menyertakan hasil riset terkait atau referensi. Referensi yang diberikan harus berasal dari sumber yang kredibel dan author yang jelas.
+### Mengapa masalah ini harus diselesaikan:
+1. Untuk perencanaan keuangan yang lebih baik
+2. Untuk pengelolaan risiko yang lebih baik
+3. Untuk peningkatan layanan pelanggan
 
+### Bagaimana masalah ini dapat diselesaikan:
+Masalah ini dapar diselesaikan dengan cara:
+1. Melakukan pengumpulan data
+2. Melakukan pra-pemrosesan data
+3. Melakukan EDA dataset
+4. Melakukan pemilihan model machine learning
+5. Melakukan implementasi dan monitoring pada model
+   
 
 ## Business Understanding
 ### Problem Statements
@@ -32,6 +41,7 @@ Berikut merupakan Solution statements dari proyek yang dikerjakan:
 Dataset yang digunakan dalam proyek merupakan data open source yang dapat diakses melalui website Kaggle. Dataset Medical Cost dapat diakses <a href='https://www.kaggle.com/datasets/mirichoi0218/insurance'>disini</a>.
 
 Pada dataset terdapat 1338 baris data yang masing-masing memiliki 7 kolom informasi. Kolom-kolom tersebut meliputi kolom age, sex, bmi, children, smoker, region dan charges dengan keterangan sebagai berikut:
+![image](https://github.com/user-attachments/assets/f35c5aaf-ae51-4ed4-8a3e-d2112633f99e)
 1.  age: usia individu (dalam tahun)
 2.  sex: jenis kelamin individu (male/female)
 3.  bmi: body mass index, merupakan  indikator pengukuran yang digunakan untuk menentukan kategori berat badan ideal atau tidak, diperoleh dari berat badan dibagi dengan kuadrat tinggi badan dalam satuan kg/m^2
@@ -49,14 +59,31 @@ Pada dataset terdapat 1338 baris data yang masing-masing memiliki 7 kolom inform
 ![Untitled](https://github.com/user-attachments/assets/3dac6340-b15a-480c-99c8-0143b4ee7ae4)
 
 
-
-
 ## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
+Teknik data preparation meliputi:
+1. Pembersihan data. Pembersihan data yang dilakukan meliputi proses penanganan nilai null, penghapusan duplikat, dan penanganan outlier. 
+penanganan nilai null:
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+![image](https://github.com/user-attachments/assets/17cfcf2c-70eb-42b9-941c-c9b1f339900b)
+
+outlier pada bmi: ![image](https://github.com/user-attachments/assets/2d8fe214-62a9-469c-8aa2-df9833a36654)
+outlier pada charges: ![image](https://github.com/user-attachments/assets/8aa9cd80-5c7c-448f-a9d5-93f0535ddcf1)
+
+penanganan outlier:
+![image](https://github.com/user-attachments/assets/d4faff33-9ac2-4f02-a7c9-edf55af22da0)
+
+2. Encoding kategorical. Proses ini dilakukan dengan one-hot encoding atau pengubahan fitur kategorical menjadi representasi numerik. hal ini dilakukan sebab machine learning biasanya akan memerlukan data berbentuk numerik sebagai inputnya. Penerapan encoding kategorical dilakukan dengan menggunakan 'pandas.get_dummies()'
+![image](https://github.com/user-attachments/assets/928481b2-6e70-4fbe-aa45-7d0a9c64c395)
+
+3. Reduksi dimensi dengan Principal Component Analysis (PCA). proses ini bertujuan  untuk mengurangi jumlah fitur atau variabel dalam dataset sambil menjaga sebanyak mungkin informasi relevan dari data asli.
+![image](https://github.com/user-attachments/assets/a02dd766-b427-43fc-9ee0-625f65fa48fe)
+  
+4. Pembagian data menjadi training dan testing. pembagian data atau split data dilakukan dengan perbandingan 90% untuk data training dan 10% untuk data testing. penerapannya dilakuakan dengan 'sklearn.model_selection.train_test_split()'
+![image](https://github.com/user-attachments/assets/24753a70-a495-4617-973f-71f656b9939a)
+
+5. Proses standarisasi. Proses ini merupakan proses penting dalam preparation data yang mengubah fitur numerik ke skala yang konsisten sehingga memiliki rata-rata 0 dan deviasi standar 1. proses ini dilakukan dengan tujuan untuk menghindari bias terhadap skala fitur, mempercepat konvergensi algoritma gradient descent dan meningkatkan interpretabilitas model.
+![image](https://github.com/user-attachments/assets/a45682ed-5ed7-4fb9-a77c-d5c702471ff1)
+
 
 ## Modeling
 Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
