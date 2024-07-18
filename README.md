@@ -52,6 +52,23 @@ Pada dataset terdapat 1338 baris data yang masing-masing memiliki 7 kolom inform
 
 ![image](https://github.com/user-attachments/assets/7287cb9f-070b-4433-b394-b241a3751265)
 
+***outlier pada data***
+![image](https://github.com/user-attachments/assets/154d5a23-b3f7-4188-a6c3-9f20fc1e06cf)
+
+
+dari grafik tersebut dapat dilihat bahwa terdapat outlier pada bmi dan charges.
+
+outlier pada bmi: 
+
+![image](https://github.com/user-attachments/assets/2d8fe214-62a9-469c-8aa2-df9833a36654)
+
+outlier pada charges: 
+
+![image](https://github.com/user-attachments/assets/8aa9cd80-5c7c-448f-a9d5-93f0535ddcf1)
+
+penanganan outlier:
+![image](https://github.com/user-attachments/assets/d4faff33-9ac2-4f02-a7c9-edf55af22da0)
+
 ***numerical features***
 ![Untitled](https://github.com/user-attachments/assets/e0ff6a5b-3758-4e93-89df-413d31d2054e)
 
@@ -61,27 +78,25 @@ Pada dataset terdapat 1338 baris data yang masing-masing memiliki 7 kolom inform
 
 ## Data Preparation
 Teknik data preparation meliputi:
-1. Pembersihan data. Pembersihan data yang dilakukan meliputi proses penanganan nilai null, penghapusan duplikat, dan penanganan outlier. 
+1. Pembersihan data. Pembersihan data yang dilakukan meliputi proses penanganan nilai null, dan penghapusan duplikat. 
 penanganan nilai null:
 
 ![image](https://github.com/user-attachments/assets/17cfcf2c-70eb-42b9-941c-c9b1f339900b)
 
-outlier pada bmi: ![image](https://github.com/user-attachments/assets/2d8fe214-62a9-469c-8aa2-df9833a36654)
-outlier pada charges: ![image](https://github.com/user-attachments/assets/8aa9cd80-5c7c-448f-a9d5-93f0535ddcf1)
 
-penanganan outlier:
-![image](https://github.com/user-attachments/assets/d4faff33-9ac2-4f02-a7c9-edf55af22da0)
 
-2. Encoding kategorical. Proses ini dilakukan dengan one-hot encoding atau pengubahan fitur kategorical menjadi representasi numerik. hal ini dilakukan sebab machine learning biasanya akan memerlukan data berbentuk numerik sebagai inputnya. Penerapan encoding kategorical dilakukan dengan menggunakan 'pandas.get_dummies()'
+2. Melakukan drop pada kolom dataset 'bmi'. Proses ini dilakukan sebab kolom 'bmi' dianggap tidak memberikan informasi tambahan yang signifikan bagi pembuatan model prediksi biaya
+   
+3. Encoding kategorical. Proses ini dilakukan dengan one-hot encoding atau pengubahan fitur kategorical menjadi representasi numerik. hal ini dilakukan sebab machine learning biasanya akan memerlukan data berbentuk numerik sebagai inputnya. Penerapan encoding kategorical dilakukan dengan menggunakan 'pandas.get_dummies()'
 ![image](https://github.com/user-attachments/assets/928481b2-6e70-4fbe-aa45-7d0a9c64c395)
 
-3. Reduksi dimensi dengan Principal Component Analysis (PCA). proses ini bertujuan  untuk mengurangi jumlah fitur atau variabel dalam dataset sambil menjaga sebanyak mungkin informasi relevan dari data asli.
+4. Reduksi dimensi dengan Principal Component Analysis (PCA). proses ini bertujuan  untuk mengurangi jumlah fitur atau variabel dalam dataset sambil menjaga sebanyak mungkin informasi relevan dari data asli.
 ![image](https://github.com/user-attachments/assets/a02dd766-b427-43fc-9ee0-625f65fa48fe)
   
-4. Pembagian data menjadi training dan testing. pembagian data atau split data dilakukan dengan perbandingan 90% untuk data training dan 10% untuk data testing. penerapannya dilakuakan dengan 'sklearn.model_selection.train_test_split()'
+5. Pembagian data menjadi training dan testing. pembagian data atau split data dilakukan dengan perbandingan 90% untuk data training dan 10% untuk data testing. penerapannya dilakuakan dengan 'sklearn.model_selection.train_test_split()'
 ![image](https://github.com/user-attachments/assets/24753a70-a495-4617-973f-71f656b9939a)
 
-5. Proses standarisasi. Proses ini merupakan proses penting dalam preparation data yang mengubah fitur numerik ke skala yang konsisten sehingga memiliki rata-rata 0 dan deviasi standar 1. proses ini dilakukan dengan tujuan untuk menghindari bias terhadap skala fitur, mempercepat konvergensi algoritma gradient descent dan meningkatkan interpretabilitas model.
+6. Proses standarisasi. Proses ini merupakan proses penting dalam preparation data yang mengubah fitur numerik ke skala yang konsisten sehingga memiliki rata-rata 0 dan deviasi standar 1. proses ini dilakukan dengan tujuan untuk menghindari bias terhadap skala fitur, mempercepat konvergensi algoritma gradient descent dan meningkatkan interpretabilitas model.
 ![image](https://github.com/user-attachments/assets/a45682ed-5ed7-4fb9-a77c-d5c702471ff1)
 
 
@@ -120,11 +135,11 @@ Model machine learning yang digunakan untuk menyelesaikan permasalahan ini melip
    models.loc['train_mse','RandomForest'] = mean_squared_error(y_pred=RF.predict(X_train), y_true=y_train)
    ```
 
-   Kode ini melatih model RandomForestRegressor dengan 50 estimator dan kedalaman maksimum 16 pada data pelatihan X_train dan y_train. Setelah pelatihan, model digunakan untuk memprediksi nilai pada data pelatihan, dan MSE (Mean Squared Error) dari prediksi tersebut dihitung serta disimpan dalam DataFrame models pada baris 'train_mse' dan kolom 'RandomForest'
+   Kode ini melatih model RandomForestRegressor dengan 50 estimator, max depth 16, 55 random_state  dan -1 n_jobs pada data pelatihan X_train dan y_train. n_estimators menentukan jumlah pohon keputusan (decision trees) dalam random forest, max_depth mengontrol kedalaman maksimum setiap pohon keputusan, lalu  random_state adalah parameter yang digunakan untuk mengontrol proses randomisasi dalam pembentukan pohon keputusan, dan n_jobs akan mengatur jumlah inti CPU yang akan digunakan untuk komputasi paralel. Dengan n_jobs=-1, model akan menggunakan semua inti CPU yang tersedia. Setelah pelatihan, model digunakan untuk memprediksi nilai pada data pelatihan, dan MSE (Mean Squared Error) dari prediksi tersebut dihitung serta disimpan dalam DataFrame models pada baris 'train_mse' dan kolom 'RandomForest'
 
 
 
-3. Algoritma Boosting
+4. Algoritma Boosting
 
    ```
    boosting = AdaBoostRegressor(learning_rate=0.05, random_state=55)
