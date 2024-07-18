@@ -100,8 +100,44 @@ Model machine learning yang digunakan untuk menyelesaikan permasalahan ini melip
    -Kekurangan : Sensitif terhada noise, memerlukan tuning hyperparameter yang cermat
 
 
+### Cara kerja masing-masing algoritma:
+1. Algoritma KNN
+
+   ```
+   knn = KNeighborsRegressor(n_neighbors=10)
+   knn.fit(X_train, y_train)
+   
+   models.loc['train_mse','knn'] = mean_squared_error(y_pred =       knn.predict(X_train), y_true=y_train)
+   ```
+   Kode ini melatih model K-Nearest Neighbors (KNN) dengan 10 tetangga pada    data pelatihan X_train dan y_train. Setelah pelatihan, model ini digunakan untuk memprediksi nilai pada data pelatihan, dan MSE (Mean Squared Error) dari prediksi tersebut dihitung dan disimpan dalam DataFrame models pada baris 'train_mse' dan kolom 'KNN'
+
+   
+
+2. Algoritma RF
+   ```
+   RF = RandomForestRegressor(n_estimators=50, max_depth=16, random_state=55, n_jobs=-1)
+   RF.fit(X_train, y_train)
+   models.loc['train_mse','RandomForest'] = mean_squared_error(y_pred=RF.predict(X_train), y_true=y_train)
+   ```
+
+   Kode ini melatih model RandomForestRegressor dengan 50 estimator dan kedalaman maksimum 16 pada data pelatihan X_train dan y_train. Setelah pelatihan, model digunakan untuk memprediksi nilai pada data pelatihan, dan MSE (Mean Squared Error) dari prediksi tersebut dihitung serta disimpan dalam DataFrame models pada baris 'train_mse' dan kolom 'RandomForest'
+
+
+
+3. Algoritma Boosting
+
+   ```
+   boosting = AdaBoostRegressor(learning_rate=0.05, random_state=55)
+   boosting.fit(X_train, y_train)
+   models.loc['train_mse','Boosting'] = mean_squared_error(y_pred=boosting.predict(X_train), y_true=y_train)
+   ```
+   Kode ini melatih model AdaBoostRegressor dengan laju pembelajaran 0.05 pada data pelatihan X_train dan y_train. Setelah pelatihan, model digunakan untuk memprediksi nilai pada data pelatihan, dan MSE (Mean Squared Error) dari prediksi tersebut dihitung serta disimpan dalam DataFrame models pada baris 'train_mse' dan kolom 'Boosting'.
+
+   
+
 ## Evaluation
 Pada proyek ini, metrik evaluasi yang diggunakan berupa MSE atau Mean Squared Error. MSE merupakan metrik evaluasi yang mengukur rata-rata kuadrat kesalahan antara nilai prediksi dan nilai aktual.
+
 ### Hasil Perhitungan MSE pada masing-masing algoritma
 ![image](https://github.com/user-attachments/assets/b7eb3323-6f41-4e18-beab-e5d6751da581)
 ![Untitled](https://github.com/user-attachments/assets/373a498a-bd24-4b73-b97f-3b810023546d)
@@ -112,3 +148,15 @@ Pada proyek ini, metrik evaluasi yang diggunakan berupa MSE atau Mean Squared Er
 
 ### Kesimpulan
 Berdasarkan hasil prediksi tersebut, RF memberikan prediksi yang paling mendekati nilai sebenarnya (y_true). Sehingga model RF dapat digunakan sebagai model terbaik untuk melakukan prediksi medical charges.
+
+Dalam hal ini, berati kita telah menjawab pertanyaan pada problem statement dan mencapai tujuan dari goals yang sebelumnya telah disebutkan.
+Menjawab peoblem statement:
+  - Bagaimana kita dapat membuat prediksi biaya medis suatu individu dengan     memanfaatkan data yang ada?
+= Kita dapat membuat prediksi biaya medis dengan menggunakan model yang telah dilatih untuk memprediksi biaya berdasarkan fitur yang terdapat dalam data  individu.
+  - Bagaimana kita dapat menemukan jenis algoritma terbaik yang akan digunakan dalam model prediksi biaya medis ini?
+= Kita dapat menemukan jenis algoritma terbaik yang akan digunakan dalam model prediksi dengan membandingkan performa beberapa algoritma, dari hal tersebut kita telah  menemukan bahwa algoritma RandomForestRegressor adalah yang paling efektif dalam menghasilkan prediksi yang akurat untuk biaya medis.
+
+Berdasarkan hasil analisis dan evaluasi yang dilakukan, kita berhasil mencapai tujuan proyek yang diharapkan yaitu:
+    -Berhasil membangun model yang akurat untuk memprediksi biaya medis melalui model RandomForestRegressor yang telah menunjukkan performa terbaik dengan prediksi yang paling mendekati nilai sebenarnya (y_true).
+   -Berhasil melakukan evaluasi dan perbandingan kinerja berbagai model yang dibangun, yaitu dengan membandingkan Kinerja berbagai model (KNN, RandomForest, dan Boosting) dan memberikan hasil berupa kinerja RandomForestRegressor  menjadi model yang paling efektif berdasarkan MSE pada data pengujian.
+Dengan demikian, tujuan proyek untuk membangun model prediksi yang akurat dan mengevaluasi kinerja berbagai model telah berhasil dicapai.
